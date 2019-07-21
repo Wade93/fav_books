@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All Books</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'fb_app/css/style.css' %}">  
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+        <script src="{% static 'fb_app/js/script.js' %}"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </head>
+    <body class="px-5">
+        <div class="row">
+            <h1 class="display-4">Welcome, {{request.session.fname}}</h1>
+            <a href="/log_out_user" class="ml-auto mr-5">Log Out</a>
+        </div>
+        <div class="row">
+            <div class="col-5 mr-3 border border-dark">
+                <h4>Add a Favorite Book</h4>
+                <form class="mt-5" action="add_new_book" method="POST">
+                    {% csrf_token %}
+                    <p>Title</p>
+                    <input type="text" name="title">
+                    <p class="mt-2">Description</p>
+                    <textarea name="description"></textarea>
+                    <input type="submit" class="d-block mt-3" value="Add">
+                </form>
+            </div>
+            <div class="col-5 ml-5 border border-dark">
+                <h4 class="mb-3">All Books</h4>
+                {% for book in all_books %}
+                <a href="view_book/{{book.id}}">{{book.title}}</a>
+                <small class="d-block">(added by {{book.uploaded_by.first_name}})</small>
+                {% if book in favorited %}
+                <small class="mb-3 d-block font-italic">This is one of your favorites.</small>
+                {% endif %}
+                {% if book not in favorited %}
+                <a class="mb-3 d-block" href="favorite_book/{{book.id}}">Favorite This Book</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Index</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'fb_app/css/style.css' %}">  
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">  
+        <script src="{% static 'fb_app/js/script.js' %}"></script>
+    </head>
+    <body>
+        <div class="container justify-content-around">
+            <div class="row">
+            <div class="col-5">
+                <h1 class="my-5 text-center">Registration</h1>
+                <form class="form col" action="/register_new_user" method="POST">
+                    {% csrf_token %}
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>First Name</p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "fname error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="text" name="fname" value="{{request.session.fname}}"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Last Name</p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "lname error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="text" name="lname" value="{{request.session.lname}}"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Email</p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "email error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="text" name="email" value="{{request.session.email}}"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Date of Birth</p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "bdate error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="date" name="bdate"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Password</p>
+                            {% if wall_messages %}
+                                {% for message in wall_messages %}
+                                    {% if message.tags == "password error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="password" name="password"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Confirm PW</p>
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == "confirm_password error" %}
+                                        <small class="text-danger">{{message}}</small>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="password" name="confirm_password"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center"><input type="submit" class="btn btn-info py-2 px-5" value="Register!"></div>
+                    <input type="hidden" name="form_type" value="1">
+                </form>
+            </div>
+            <div class="col-5">
+                <h1 class="my-5 mx-auto text-center">Login</h1>
+                <form class="form col" action="/login_user" method="POST">
+                    {% csrf_token %}
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Email</p>
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="text" name="email"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center">
+                        <div class="col-4">
+                            <p>Password</p>
+                        </div>
+                        <div class="col-4"><input class="border border-dark" type="password" name="password"></div>
+                    </div>
+                    <div class="row my-3 justify-content-center"><input type="submit" class="btn btn-info py-2 px-5" value="Log in!"></div>
+                    <input type="hidden" name="form_type" value="2">
+                    <div class="row justify-content-center">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if message.tags == "login error" %}
+                                    <small class="text-danger">{{message}}</small>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
